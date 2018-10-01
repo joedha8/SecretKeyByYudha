@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 
 public class LocalStoreUtils {
     private static final String PREF_FILE_NAME = "id.rackspira.secretkeyholder";
-    private static final String KEY_SECRET = "api_secret";
+    private static final String KEY_SECRET = "secret_key";
+    private static final String URL_SECRET = "secret_url";
 
-    public static void setAppSecret(String secret, Context context) {
+    public static void setKeySecret(String secret, Context context) {
         try {
             SharedPreferences.Editor editor = getSharedEditor(context);
             editor.putString(KEY_SECRET, secret);
@@ -17,10 +18,30 @@ public class LocalStoreUtils {
         }
     }
 
-    public static String getAppSecret(Context context) {
+    public static String getKeySecret(Context context) {
         try {
             SharedPreferences pref = getSharedPreference(context);
             return pref.getString(KEY_SECRET, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void setUrlSecret(String secret, Context context) {
+        try {
+            SharedPreferences.Editor editor = getSharedEditor(context);
+            editor.putString(URL_SECRET, secret);
+            editor.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getUrlSecret(Context context) {
+        try {
+            SharedPreferences pref = getSharedPreference(context);
+            return pref.getString(URL_SECRET, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
