@@ -1,24 +1,18 @@
 package id.rackspira.secretkeyholder;
 
-import android.content.Context;
+import android.app.Application;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
 
-public class CustomSecretHolder {
-
-    private Context context;
-
-    public CustomSecretHolder(Context context){
-        this.context=context;
-    }
+public class CustomSecretHolder extends Application {
 
     public void setSecretKey(String apiKey){
-        if(LocalStoreUtils.getKeySecret(context)==null) {
+        if(LocalStoreUtils.getKeySecret(this)==null) {
 
             byte[] data = Base64.decode(apiKey, Base64.DEFAULT);
             try {
-                LocalStoreUtils.setKeySecret(new String(data, "UTF-8"), context);
+                LocalStoreUtils.setKeySecret(new String(data, "UTF-8"), this);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -26,15 +20,15 @@ public class CustomSecretHolder {
     }
 
     public String getSecretKey(){
-        return LocalStoreUtils.getKeySecret(context);
+        return LocalStoreUtils.getKeySecret(this);
     }
 
     public void setSecretUrl(String baseUrl){
-        if(LocalStoreUtils.getUrlSecret(context)==null) {
+        if(LocalStoreUtils.getUrlSecret(this)==null) {
 
             byte[] data = Base64.decode(baseUrl, Base64.DEFAULT);
             try {
-                LocalStoreUtils.setUrlSecret(new String(data, "UTF-8"), context);
+                LocalStoreUtils.setUrlSecret(new String(data, "UTF-8"), this);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -42,7 +36,7 @@ public class CustomSecretHolder {
     }
 
     public String getSecretUrl(){
-        return LocalStoreUtils.getUrlSecret(context);
+        return LocalStoreUtils.getUrlSecret(this);
     }
 
 }
